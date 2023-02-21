@@ -1,0 +1,311 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-21 16:33+0300\n"
+"PO-Revision-Date: 2023-02-21 16:46+0000\n"
+"Last-Translator:   <>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: .\config\settings.py:157 .\templates\layout\base.html:83
+#: .\templates\user\login.html:53 .\templates\user\register.html:53
+msgid "English"
+msgstr "İngilizce"
+
+#: .\config\settings.py:158 .\templates\layout\base.html:76
+#: .\templates\user\login.html:45 .\templates\user\register.html:45
+msgid "Turkish"
+msgstr "Türkçe"
+
+#: .\config\urls.py:26
+msgid "admin/"
+msgstr ""
+
+#: .\config\urls.py:30
+msgid "auth/"
+msgstr ""
+
+#: .\templates\dashboard\index.html:5 .\templates\error_page\404.html:5
+msgid "Home Page"
+msgstr "Ana Sayfa"
+
+#: .\templates\dashboard\index.html:9
+msgid "Welcome to the UAV Rental Dashboard!"
+msgstr "İHA Kiralama Paneline Hoş Geldiniz!"
+
+#: .\templates\dashboard\index.html:14
+msgid "You can add and update UAVs from the tabs on the left!"
+msgstr "Soldaki sekmelerden İHA ekleyebilir ve güncelleyebilirsiniz!"
+
+#: .\templates\error_page\404.html:11
+msgid "Oops! Page not found."
+msgstr "Hata! Sayfa bulunamadı."
+
+#: .\templates\error_page\404.html:13
+msgid "We could not find the page you were looking for.Meanwhile, you may"
+msgstr "Aradığınız sayfayı bulamadık."
+
+#: .\templates\error_page\404.html:13
+msgid "return to dashboard"
+msgstr "kontrol paneline dön"
+
+#: .\templates\error_page\404.html:13
+msgid "or try using the search form"
+msgstr "veya arama formunu kullanmayı deneyin"
+
+#: .\templates\error_page\404.html:24
+msgid "Page"
+msgstr "Sayfa"
+
+#: .\templates\iha\add.html:7
+msgid "IHA Add Page"
+msgstr "IHA Ekleme Sayfası"
+
+#: .\templates\iha\add.html:15 .\templates\layout\base.html:162
+msgid "IHA Add"
+msgstr "IHA Ekle"
+
+#: .\templates\iha\add.html:28 .\templates\iha\add.html:30
+#: .\templates\iha\list.html:44 .\templates\iha\list.html:46
+#: .\templates\iha\list.html:97 .\templates\iha\update.html:28
+#: .\templates\iha\update.html:30
+msgid "Mark"
+msgstr "Marka"
+
+#: .\templates\iha\add.html:33 .\templates\iha\add.html:35
+#: .\templates\iha\list.html:51 .\templates\iha\list.html:53
+#: .\templates\iha\list.html:98 .\templates\iha\update.html:33
+#: .\templates\iha\update.html:35
+msgid "Model"
+msgstr "Model"
+
+#: .\templates\iha\add.html:39 .\templates\iha\add.html:42
+#: .\templates\iha\list.html:61 .\templates\iha\list.html:68
+#: .\templates\iha\list.html:99 .\templates\iha\update.html:39
+#: .\templates\iha\update.html:42
+msgid "Weight"
+msgstr "Ağırlık"
+
+#: .\templates\iha\add.html:46 .\templates\iha\list.html:74
+#: .\templates\iha\list.html:76 .\templates\iha\list.html:100
+#: .\templates\iha\update.html:46
+msgid "Category"
+msgstr "Kategori"
+
+#: .\templates\iha\add.html:49 .\templates\iha\update.html:49
+msgid "Please Select Catefory"
+msgstr "Lütfen Kategori Seçiniz"
+
+#: .\templates\iha\add.html:55 .\templates\iha\add.html:57
+#: .\templates\iha\list.html:101 .\templates\iha\update.html:55
+#: .\templates\iha\update.html:57
+msgid "Status"
+msgstr "Durum"
+
+#: .\templates\iha\add.html:63 .\templates\iha\add.html:149
+msgid "Add"
+msgstr "Ekle"
+
+#: .\templates\iha\add.html:146
+msgid "Do you want to add?"
+msgstr "Eklemek istermisin?"
+
+#: .\templates\iha\add.html:150
+msgid "Dont add"
+msgstr "Ekleme"
+
+#: .\templates\iha\add.html:163
+msgid "Added!"
+msgstr "Eklendi"
+
+#: .\templates\iha\add.html:168 .\templates\iha\list.html:193
+#: .\templates\iha\update.html:183
+msgid "Changes are not saved"
+msgstr "Değişiklikler kaydedilmedi"
+
+#: .\templates\iha\list.html:7
+msgid "IHA List Page"
+msgstr "IHA Listeleme Sayfası"
+
+#: .\templates\iha\list.html:20 .\templates\layout\base.html:171
+msgid "IHA List"
+msgstr "IHA Listesi"
+
+#: .\templates\iha\list.html:30
+msgid "Filter Iha"
+msgstr "IHA Filtrele"
+
+#: .\templates\iha\list.html:37 .\templates\iha\list.html:39
+#: .\templates\user\login.html:66 .\templates\user\register.html:83
+#: .\user\forms.py:9 .\user\forms.py:10
+msgid "Username"
+msgstr "Kullanıcı Adı"
+
+#: .\templates\iha\list.html:59
+msgid "Weight Min"
+msgstr "Minimum Ağırlık"
+
+#: .\templates\iha\list.html:66
+msgid "Weight Max"
+msgstr "Maksimum Ağırlık"
+
+#: .\templates\iha\list.html:83
+msgid "Filter"
+msgstr "Filtrele"
+
+#: .\templates\iha\list.html:96
+msgid "Creator"
+msgstr "Kurucu"
+
+#: .\templates\iha\list.html:102
+msgid "Date of Record"
+msgstr "Kayıt Tarihi"
+
+#: .\templates\iha\list.html:103
+msgid "Date of Update"
+msgstr "Güncelleme Tarihi"
+
+#: .\templates\iha\list.html:104
+msgid "Options"
+msgstr "Seçenekler"
+
+#: .\templates\iha\list.html:168
+msgid "Do you want to delete?"
+msgstr "Silmek istiyor musunuz?"
+
+#: .\templates\iha\list.html:171 .\templates\iha\list.html:228
+msgid "Delete"
+msgstr "Sil"
+
+#: .\templates\iha\list.html:172
+msgid "Dont delete"
+msgstr "Silme"
+
+#: .\templates\iha\list.html:187
+msgid "Deleted!"
+msgstr "Silindi!"
+
+#: .\templates\iha\list.html:224
+msgid "Active"
+msgstr "Aktif"
+
+#: .\templates\iha\list.html:224
+msgid "Deactive"
+msgstr "Deaktif"
+
+#: .\templates\iha\list.html:227 .\templates\iha\update.html:63
+#: .\templates\iha\update.html:166
+msgid "Update"
+msgstr "Güncelle"
+
+#: .\templates\iha\update.html:7
+msgid "IHA Update Page"
+msgstr "IHA Güncelleme Sayfası"
+
+#: .\templates\iha\update.html:15
+msgid "IHA Update"
+msgstr "IHA Güncelle"
+
+#: .\templates\iha\update.html:163
+msgid "Do you want to update?"
+msgstr "Güncellemek istiyor musunuz?"
+
+#: .\templates\iha\update.html:167
+msgid "Dont update"
+msgstr "Güncelleme"
+
+#: .\templates\iha\update.html:179
+msgid "Updated!"
+msgstr "Güncellendi!"
+
+#: .\templates\layout\base.html:10 .\templates\layout\base.html:58
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: .\templates\layout\base.html:61
+msgid "Logout"
+msgstr "Çıkış Yap"
+
+#: .\templates\layout\base.html:112
+msgid "User"
+msgstr "Kullanıcı"
+
+#: .\templates\layout\base.html:120
+msgid "Search"
+msgstr "Ara"
+
+#: .\templates\layout\base.html:154
+msgid "IHA"
+msgstr "IHA"
+
+#: .\templates\layout\base.html:222
+msgid "All rights reserved."
+msgstr "Her hakkı saklıdır."
+
+#: .\templates\user\login.html:9
+msgid "IHA | Log in"
+msgstr "İHA | Giriş yap"
+
+#: .\templates\user\login.html:33
+msgid "İHA Login"
+msgstr "İHA Giriş"
+
+#: .\templates\user\login.html:62 .\templates\user\register.html:62
+msgid "Sign in to start your session"
+msgstr "Oturumunuzu başlatmak için oturum açın"
+
+#: .\templates\user\login.html:74 .\templates\user\register.html:92
+#: .\user\forms.py:11 .\user\forms.py:13
+msgid "Password"
+msgstr "Şifre"
+
+#: .\templates\user\login.html:97
+msgid "Remember Me"
+msgstr "Beni Hatırla"
+
+#: .\templates\user\login.html:103
+msgid "Sign In"
+msgstr "Giriş Yap"
+
+#: .\templates\user\login.html:110 .\templates\user\register.html:118
+msgid "Register"
+msgstr "Kayıt ol"
+
+#: .\templates\user\register.html:9
+msgid "IHA | Register"
+msgstr "IHA | Kayıt ol"
+
+#: .\templates\user\register.html:33
+msgid "İHA Register"
+msgstr "İHA Kayıt ol"
+
+#: .\templates\user\register.html:66
+msgid "Name"
+msgstr "İsim"
+
+#: .\templates\user\register.html:75
+msgid "Surname"
+msgstr "Soyisim"
+
+#: .\templates\user\register.html:101
+msgid "Retype Password"
+msgstr "Şifrenizi yeniden yazın"
+
+#: .\templates\user\register.html:113
+msgid "I already have a membership"
+msgstr "Üyeliğim var zaten"
+
+#: .\user\views.py:23 .\user\views.py:26
+msgid "Wrong username or password!"
+msgstr "Kullanıcı adı ya da parola yanlış!"

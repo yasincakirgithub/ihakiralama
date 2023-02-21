@@ -1,0 +1,230 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load i18n_switcher %}
+{% load i18n %}
+
+{% block pageTitle %}
+    {% trans 'IHA Update Page' %}
+{% endblock %}
+
+{% block customCss %}
+
+{% endblock %}
+
+{% block contentTitle %}
+    {% trans 'IHA Update' %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <!--IHA güncelleme formu -->
+                    <form id="formUpdateIha">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ihaMark">{% trans 'Mark' %}</label>
+                                <input required name="ihamark" type="text" class="form-control" id="ihaMark"
+                                       placeholder="{% trans 'Mark' %}">
+                            </div>
+                            <div class="form-group">
+                                <label for="ihaModel">{% trans 'Model' %}</label>
+                                <input required name="ihamodel" type="text" class="form-control" id="ihaModel"
+                                       placeholder="{% trans 'Model' %}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ihaWeight">{% trans 'Weight' %}</label>
+                                <input required name="ihaweight" type="number" step="0.001" class="form-control"
+                                       id="ihaWeight"
+                                       placeholder="{% trans 'Weight' %}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ihaCategory">{% trans 'Category' %}</label>
+
+                                <select required id="ihaCategory" name="ihacategory" class="form-control">
+                                    <option selected value="" disabled>{% trans 'Please Select Catefory' %}</option>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ihaStatus">{% trans 'Status' %}</label>
+                                <input name="ihastatus" type="checkbox" checked id="ihaStatus"
+                                       placeholder="{% trans 'Status' %}">
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
+                        </div>
+                    </form>
+                </div>
+                <div style="display: none" id="containerOverlay" class="overlay">
+                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block customJs %}
+
+    <script src="{% static '/admin-lte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+    <!-- Card Üzerindeki elementleri ajax isteği bitene kadar erişimi kısıtlamak için show ve hide fonksiyonları -->
+    <script>
+        function show_loading_containerOverlay() {
+            $('#containerOverlay').css('display', '')
+        }
+        function hide_loading_containerOverlay() {
+            $('#containerOverlay').css('display', 'none')
+        }
+    </script>
+
+    <script>
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+
+        let formUpdateIha = $('#formUpdateIha');
+        let ihaId = "{{ ihaId }}";
+
+
+        <!--IHA kategorileri getirme fonksiyonu -->
+        function getIhaCategories() {
+            show_loading_containerOverlay()
+            $.ajax({
+                method: "GET",
+                url: "{% url 'api-iha-category-list' %}",
+            }).done(function (res, textStatus, jqXHR) {
+                    hide_loading_containerOverlay()
+                    $.each(res, function (index, data) {
+                        $('#ihaCategory').append(`<option value="${data.id}">${data.name}</option>`)
+                    });
+
+                }
+            );
+
+        }
+
+         <!--IHA bilgilerini getirme fonksiyonu -->
+        function getIhaInformation() {
+            show_loading_containerOverlay()
+            $.ajax({
+                method: "GET",
+                url: "{% url 'api-iha-detail' pk=1 %}".replace(/1/, ihaId)
+            }).done(function (res) {
+                    hide_loading_containerOverlay()
+                    $('input[name=ihamark]').val(res.mark)
+                    $('input[name=ihamodel]').val(res.model)
+                    $('input[name=ihaweight]').val(res.weight)
+                    $('input[name=ihastatus]').prop("checked",res.status)
+                    $('select[name=ihacategory]').val(res.category)
+                }
+            );
+        }
+
+        <!--IHA bilgilerini güncelleme fonksiyonu -->
+        function updateIha(mark, model, weight, status, creator, category) {
+
+            var request_dict = {
+                "mark": mark,
+                "model": model,
+                "weight": weight,
+                "status": status,
+                "creator": creator,
+                "category": category
+            }
+            var update_url = "{% url 'api-iha-detail' pk=1 %}".replace(/1/, ihaId)
+
+            Swal.fire({
+                title: "{% trans 'Do you want to update?' %}",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "{% trans 'Update' %}",
+                denyButtonText: "{% trans 'Dont update' %}",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    show_loading_containerOverlay()
+                    $.ajax({
+                        method: "PUT",
+                        url: update_url,
+                        contentType: 'application/json',
+                        dataType: "text",
+                        data: JSON.stringify(request_dict)
+
+                    }).done(function (res, textStatus, jqXHR) {
+                            hide_loading_containerOverlay()
+                            Swal.fire("{% trans 'Updated!' %}", '', 'success')
+                        }
+                    );
+                } else if (result.isDenied) {
+                    Swal.fire("{% trans 'Changes are not saved' %}", '', 'info')
+                }
+            })
+
+
+        }
+
+        $(document).ready(async function () {
+
+            await getIhaCategories()
+            await getIhaInformation()
+            formUpdateIha.submit(function (event) {
+                event.preventDefault();
+
+                var mark = $('input[name=ihamark]').val()
+                var model = $('input[name=ihamodel]').val()
+                var weight = $('input[name=ihaweight]').val()
+                var status = $('input[name=ihastatus]').prop("checked")
+                var creator = '{{ request.user.id }}'
+                var category = $('select[name=ihacategory]').val()
+
+                updateIha(mark, model, weight, status, creator, category)
+
+            });
+
+        })
+
+
+    </script>
+
+{% endblock %}

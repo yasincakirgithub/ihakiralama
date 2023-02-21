@@ -1,0 +1,126 @@
+{% load static %}
+{% load i18n_switcher %}
+{% load i18n %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans 'IHA | Log in' %} </title>
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/fontawesome-free/css/all.min.css' %}">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/dist/css/adminlte.min.css' %}">
+
+</head>
+
+<body class="login-page" cz-shortcut-listen="true" style="min-height: 466px;">
+
+<!-- Aktif kullanılabilir dillerin getirilmesi (Django-backend) -->
+{% get_current_language as CURRENT_LANGUAGE %}
+{% get_available_languages as AVAILABLE_LANGUAGES %}
+{% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+
+
+<div class="login-box">
+
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a class="h1"><b>{% trans 'İHA Login' %}</b></a>
+
+             <!-- Dil değiştirme navbarı -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <span class="badge badge-danger">{{ CURRENT_LANGUAGE|upper }}</span>
+
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 20px;">
+
+                        <a href="{{ request|switch_i18n:'tr' }}" class="dropdown-item"><img width="20px"
+                                                                                            src="{% static '/flag/tr.png' %}"/> {% trans 'Turkish' %}
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+
+                        <a href="{{ request|switch_i18n:'en' }}" class="dropdown-item"><img width="20px"
+                                                                                            src="{% static '/flag/en.png' %}"/>
+                            {% trans 'English' %} </a>
+
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <p class="login-box-msg">{% trans 'Sign in to start your session' %}</p>
+
+            <!-- Login Formu-->
+            <form action="{% url 'loginPage' %}" method="post">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="{% trans 'Username' %}" name="username">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="{% trans 'Password' %}" name="password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+
+                    {% if error %}
+                        <label class="col-form-label text-danger" for="inputError"><i class="far fa-times-circle"></i>
+                            {{ error }}
+                        </label>
+                    {% endif %}
+
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">
+                                {% trans 'Remember Me' %}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">{% trans 'Sign In' %}</button>
+                    </div>
+
+                </div>
+            </form>
+
+            <p class="mb-0">
+                <a href="{% url 'registerPage' %}" class="text-center">{% trans 'Register' %}</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static '/admin-lte/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static '/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static '/admin-lte/dist/js/adminlte.min.js?v=3.2.0' %}"></script>
+
+
+</body>
+
+</html>

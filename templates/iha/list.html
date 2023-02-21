@@ -1,0 +1,278 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load i18n_switcher %}
+{% load i18n %}
+
+{% block pageTitle %}
+    {% trans 'IHA List Page' %}
+{% endblock %}
+
+{% block customCss %}
+
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static '/admin-lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+
+{% endblock %}
+
+{% block contentTitle %}
+    {% trans 'IHA List' %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>{% trans 'Filter Iha' %}</h3>
+                </div>
+                <div class="card-body">
+
+                    <!--IHA filtreleme formu -->
+                    <form method="get" id="filterIhaForm">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="form-group">
+                                    <label class="col-form-label">{% trans 'Creator' %}</label>
+                                    <input name="creator__username__icontains" type="text" class="form-control"
+                                           placeholder="{% trans 'Creator' %}">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="form-group">
+                                    <label class="col-form-label">{% trans 'Mark' %}</label>
+                                    <input name="mark__icontains" type="text" class="form-control"
+                                           placeholder="{% trans 'Mark' %}">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="form-group">
+                                    <label class="col-form-label">{% trans 'Model' %}</label>
+                                    <input name="model__icontains" type="text" class="form-control"
+                                           placeholder="{% trans 'Model' %}">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">{% trans 'Weight Min' %}</label>
+                                    <input name="weight__gt" type="number" step="0.001" class="form-control"
+                                           placeholder="{% trans 'Weight' %}">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">{% trans 'Weight Max' %}</label>
+                                    <input name="weight__lt" type="number" step="0.001" class="form-control"
+                                           placeholder="{% trans 'Weight' %}">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="form-group">
+                                    <label class="col-form-label">{% trans 'Category' %}</label>
+                                    <input name="category__name__icontains" type="text" class="form-control"
+                                           placeholder="{% trans 'Category' %}">
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <button class="btn btn-success float-right" type="submit">{% trans 'Filter' %}</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-body">
+                    <!--IHA listeleme tablosu -->
+                    <table style="width: 100%" id="ihaTable"
+                           class="table table-bordered table-hover dataTable dtr-inline">
+                        <thead>
+                        <tr>
+                            <th>{% trans 'Creator' %}</th>
+                            <th>{% trans 'Mark' %}</th>
+                            <th>{% trans 'Model' %}</th>
+                            <th>{% trans 'Weight' %}</th>
+                            <th>{% trans 'Category' %}</th>
+                            <th>{% trans 'Status' %}</th>
+                            <th>{% trans 'Date of Record' %}</th>
+                            <th>{% trans 'Date of Update' %}</th>
+                            <th>{% trans 'Options' %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="display: none" id="containerOverlay" class="overlay">
+                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block customJs %}
+
+    <script src="{% static '/admin-lte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static '/admin-lte/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+    <!-- Card Üzerindeki elementleri ajax isteği bitene kadar erişimi kısıtlamak için show ve hide fonksiyonları -->
+    <script>
+        function show_loading_containerOverlay() {
+            $('#containerOverlay').css('display', '')
+        }
+        function hide_loading_containerOverlay() {
+            $('#containerOverlay').css('display', 'none')
+        }
+    </script>
+
+    <script>
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+
+        let ihatable;
+        let filterIhaForm = $('#filterIhaForm');
+
+
+        <!-- Iha Silme Fonksiyonu -->
+        function deleteIha(id, element) {
+
+            var delete_url = "{% url 'api-iha-detail' pk=1 %}".replace(/1/, id.toString());
+
+            Swal.fire({
+                title: "{% trans 'Do you want to delete?' %}",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "{% trans 'Delete' %}",
+                denyButtonText: "{% trans 'Dont delete' %}",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: "DELETE",
+                        url: delete_url,
+                        contentType: 'application/json',
+                        dataType: 'text',
+
+                    }).done(function (res, textStatus, jqXHR) {
+                            if (jqXHR.status === 204) {
+                                ihatable.row($(element).closest("tr")).remove().draw();
+                                Swal.fire("{% trans 'Deleted!' %}", '', 'success')
+                            }
+                        }
+                    );
+
+                } else if (result.isDenied) {
+                    Swal.fire("{% trans 'Changes are not saved' %}", '', 'info')
+                }
+            })
+
+        }
+
+        <!-- Iha Kayıtlarını Getirme Fonksiyonu -->
+        function getDataForDatatable(query_string=null) {
+            var request_url;
+
+            if(query_string){
+                request_url = `{% url 'api-iha-list' %}?${query_string}`
+            }else{
+                request_url = `{% url 'api-iha-list' %}`
+            }
+            show_loading_containerOverlay()
+
+            $.ajax({
+                method: "GET",
+                url: request_url,
+
+            }).done(function (res) {
+                    hide_loading_containerOverlay()
+                    console.log(res)
+                    $.each(res, function (index, data) {
+                        var update_url = "{% url 'ihaUpdatePage' id=1 %}".replace(/1/, data.id.toString());
+                        ihatable.row.add([
+                            data.creator_name,
+                            data.mark,
+                            data.model,
+                            data.weight,
+                            data.category_name,
+                            data.status ? `<span class="badge badge-success">{% trans 'Active' %}</span>` : `<span class="badge badge-danger">{% trans 'Deactive' %}</span>`,
+                            new Date(data.date_of_record).toUTCString(),
+                            new Date(data.date_of_update).toUTCString(),
+                            `<div class="row"><a class="col btn btn-primary" href="${update_url}">{% trans 'Update' %}</a>
+                             <a class="col btn btn-danger" onclick="deleteIha(${data.id},this)">{% trans 'Delete' %}</a></div>
+                            `
+                        ]).draw();
+                    });
+
+                }
+            );
+        }
+
+        $(document).ready(function () {
+            ihatable = $('#ihaTable').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+            getDataForDatatable()
+            filterIhaForm.submit(function (event) {
+                event.preventDefault();
+                ihatable.clear().draw();
+                var queryString = filterIhaForm.serialize();
+                getDataForDatatable(query_string=queryString)
+
+
+            });
+
+        })
+
+
+    </script>
+
+{% endblock %}

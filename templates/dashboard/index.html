@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load i18n_switcher %}
+{% load i18n %}
+{% block pageTitle %}{% trans 'Home Page' %}{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <h2>{% trans "Welcome to the UAV Rental Dashboard!" %}</h2>
+
+    </div>
+    <div class="row">
+
+        <h3>{% trans "You can add and update UAVs from the tabs on the left!" %}</h3>
+    </div>
+
+
+
+{% endblock %}
+
+
+{% block customCss %}
+{% endblock %}
+{% block customJs %}
+{% endblock %}

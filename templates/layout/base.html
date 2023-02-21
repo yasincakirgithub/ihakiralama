@@ -1,0 +1,243 @@
+{% load static %}
+{% load i18n_switcher %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans 'Dashboard' %} - {% block pageTitle %}{% endblock %}</title>
+
+    <link href="{% static '/select2/dist/css/select2.min.css' %}" rel="stylesheet"/>
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/fontawesome-free/css/all.min.css' %}">
+
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <link rel="stylesheet"
+          href="{% static '/admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/jqvmap/jqvmap.min.css' %}">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/dist/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static '/admin-lte/dist/css/adminlte.min.css' %}">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/daterangepicker/daterangepicker.css' %}">
+
+    <link rel="stylesheet" href="{% static '/admin-lte/plugins/summernote/summernote-bs4.min.css' %}">
+
+
+    {% block customCss %}
+    {% endblock %}
+
+
+</head>
+
+<body class="sidebar-mini layout-fixed" cz-shortcut-listen="true" style="height: auto;">
+
+
+<!-- Aktif kullanılabilir dillerin getirilmesi (Django-backend) -->
+{% get_current_language as CURRENT_LANGUAGE %}
+{% get_available_languages as AVAILABLE_LANGUAGES %}
+{% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+
+
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+
+    <!-- sayfa üstündeki kısayol navbarı -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{% url 'dashboardPage' %}" class="nav-link">{% trans 'Dashboard' %}</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{% url 'logoutPage' %}" class="nav-link">{% trans 'Logout' %}</a>
+        </li>
+
+    </ul>
+
+    <!-- Dil değiştirme navbarı -->
+    <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                <span class="badge badge-danger">{{ CURRENT_LANGUAGE|upper }}</span>
+
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 20px;">
+
+                <a href="{{ request|switch_i18n:'tr' }}" class="dropdown-item"><img width="20px"
+                        src="{% static '/flag/tr.png' %}"/> {% trans 'Turkish' %}</a>
+
+                <div class="dropdown-divider"></div>
+
+
+                <a href="{{ request|switch_i18n:'en' }}" class="dropdown-item"><img width="20px"
+                                                                                    src="{% static '/flag/en.png' %}"/>
+                   {% trans 'English' %} </a>
+
+
+            </div>
+        </li>
+
+    </ul>
+
+</nav>
+
+<!-- sol sidebar -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <div
+            class="sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition">
+        <div class="os-resize-observer-host observed">
+            <div class="os-resize-observer" style="left: 0px; right: auto;"></div>
+        </div>
+        <div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;">
+            <div class="os-resize-observer"></div>
+        </div>
+        <div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 599px;"></div>
+        <div class="os-padding">
+            <div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow-y: scroll;">
+                <div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
+
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+                        <div class="info">
+                            <a class="d-block"><i class="fa fa-user"></i> {%  trans 'User' %}
+                                : {{ request.user.first_name }} {{ request.user.last_name }}</a>
+
+                        </div>
+                    </div>
+
+                    <div class="form-inline">
+                        <div class="input-group" data-widget="sidebar-search">
+                            <input class="form-control form-control-sidebar" type="search" placeholder="{%  trans 'Search'%}"
+                                   aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-sidebar">
+                                    <i class="fas fa-search fa-fw"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="sidebar-search-results">
+                            <div class="list-group"><a href="#" class="list-group-item">
+                                <div class="search-title"><strong class="text-light"></strong>N<strong
+                                        class="text-light"></strong>o<strong class="text-light"></strong> <strong
+                                        class="text-light"></strong>e<strong class="text-light"></strong>l<strong
+                                        class="text-light"></strong>e<strong class="text-light"></strong>m<strong
+                                        class="text-light"></strong>e<strong class="text-light"></strong>n<strong
+                                        class="text-light"></strong>t<strong class="text-light"></strong> <strong
+                                        class="text-light"></strong>f<strong class="text-light"></strong>o<strong
+                                        class="text-light"></strong>u<strong class="text-light"></strong>n<strong
+                                        class="text-light"></strong>d<strong class="text-light"></strong>!<strong
+                                        class="text-light"></strong></div>
+                                <div class="search-path"></div>
+                            </a></div>
+                        </div>
+                    </div>
+
+                    <nav class="mt-2">
+
+
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                            data-accordion="false">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link active">
+                                    <i class="fa fa-plane" aria-hidden="true"></i>
+                                    <p>
+                                        {% trans 'IHA' %}
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{% url 'ihaAddPage' %}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>{% trans 'IHA Add' %}</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{% url 'ihaListPage' %}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>{% trans 'IHA List' %}</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+        <div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden">
+            <div class="os-scrollbar-track">
+                <div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px, 0px);"></div>
+            </div>
+        </div>
+        <div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden">
+            <div class="os-scrollbar-track">
+                <div class="os-scrollbar-handle" style="height: 44.1501%; transform: translate(0px, 0px);"></div>
+            </div>
+        </div>
+        <div class="os-scrollbar-corner"></div>
+    </div>
+
+</aside>
+
+
+<!-- içerik alanı -->
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{% block contentTitle %}{% endblock %}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+
+            {% block content %}{% endblock %}
+
+        </div>
+    </section>
+</div>
+
+<!-- footer alanı -->
+<footer class="main-footer">
+    <strong>Copyright © 2023-2024 <a>Yasin Çakır</a>.</strong>{% trans 'All rights reserved.' %}
+</footer>
+
+
+<!-- scripts -->
+<script src="{% static '/admin-lte/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static '/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static '/admin-lte/dist/js/adminlte.min.js' %}"></script>
+<script src="{% static '/select2/dist/js/select2.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% block customJs %}
+{% endblock %}
+
+
+</body>
+
+</html>
